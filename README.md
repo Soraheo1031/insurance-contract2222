@@ -140,12 +140,12 @@
   ![image](https://user-images.githubusercontent.com/84304043/123743386-233acb00-d8e8-11eb-874f-094b5984f0a7.png)
 
 ###  Aggregate 도출(View추가)
-  ![image](https://user-images.githubusercontent.com/84304043/123743718-96444180-d8e8-11eb-8734-3021144f547a.png)
+  ![image](https://user-images.githubusercontent.com/84304043/123744918-73b32800-d8ea-11eb-97ad-c868e3ef67c6.png)
 
     - 보험상품등록, 보험가입, 결제, 심사, 보험가입이력은 그와 연결된 command와 event들에 의하여 트랜잭션이 유지되어야 하는 단위로 그들 끼리 묶어줌
 
 ### Bounded Context 도출
-  ![image](https://user-images.githubusercontent.com/84304043/123744638-00a9b180-d8ea-11eb-9513-95b34ff877c3.png)
+  ![image](https://user-images.githubusercontent.com/84304043/123744961-8594cb00-d8ea-11eb-89b3-77a2fb0eb415.png)
 
     - 도메인 서열 분리 
         - Core Domain: 보험가입, 결제, 심사 : 없어서는 안될 핵심 서비스이며, 연견 Up-time SLA 수준을 99.999% 목표, 배포주기는 보험가입/심사의 경우 2주일 1회 미만, 결제의 경우 3개월 1회 미만
