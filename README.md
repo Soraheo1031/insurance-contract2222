@@ -116,45 +116,41 @@
 
 
 ## AS-IS 조직 (Horizontally-Aligned)
-  ![image](https://user-images.githubusercontent.com/24379176/120106054-7a893680-c196-11eb-8a58-479e879d7d80.png)
+  ![image](https://user-images.githubusercontent.com/84304043/123742878-5df03380-d8e7-11eb-98ec-638a58ed87fa.png)
 
 ## TO-BE 조직 (Vertically-Aligned)
-  ![image](https://user-images.githubusercontent.com/24379176/120106055-7ceb9080-c196-11eb-992e-2913a04eaee5.png)
-
+  ![image](https://user-images.githubusercontent.com/84304043/123743018-8f68ff00-d8e7-11eb-99f8-0bc9e2ee5865.png)
 
 ## Event Storming 결과
-* MSAEz 로 모델링한 이벤트스토밍 결과:  http://msaez.io/#/storming/nZJ2QhwVc4NlVJPbtTkZ8x9jclF2/every/a77281d704710b0c2e6a823b6e6d973a/-M5AV2z--su_i4BfQfeF
+* MSAEz 로 모델링한 이벤트스토밍 결과: http://www.msaez.io/#/storming/uCvXrfqC2fOWn8AJ8j86klfXCNx1/b3143aae2bf54e75dc2ce9b31a545dae
 
 
 ### Event 도출
-![image](https://user-images.githubusercontent.com/24379176/120106145-e79ccc00-c196-11eb-8f72-83882d66b57f.png)
+  ![image](https://user-images.githubusercontent.com/84304043/123743123-bde6da00-d8e7-11eb-9642-c7a9202ba204.png)
 
 ### 부적격 Event 탈락
-![image](https://user-images.githubusercontent.com/24379176/120106148-e9ff2600-c196-11eb-82d8-2341c88c7774.png)
+  ![image](https://user-images.githubusercontent.com/84304043/123743141-c2ab8e00-d8e7-11eb-8eff-02f8d13f4571.png)
 
     - 과정중 도출된 잘못된 도메인 이벤트들을 걸러내는 작업을 수행함
-        - 보험금청구완료됨: 지급처리(보험청구프로세스 최종이벤트)와 중복되며, 다른 팀에서 관심 가질만한 아벤트가 아님
-        - 지급안내문발송됨: 다른 팀에서 관심 가질만한 이벤트가 아님
+        - 보험 가입 안내문 발송됨: 상품설명서 생성 서비스와 관련된 것으로 향후 서비스 추가 필요
         - 보험가입내역조회됨: 상태(state) 변경을 발생시키지 않음
+        - 보험 체결 완료됨: 보험가입 심사 승인됨과 동일한 프로세스임
 
-### Policy 도출
-![image](https://user-images.githubusercontent.com/24379176/120106616-c341ef00-c198-11eb-9cb4-c19b454a02de.png)
+### Policy, Actor, Command 도출
+  ![image](https://user-images.githubusercontent.com/84304043/123743386-233acb00-d8e8-11eb-874f-094b5984f0a7.png)
 
-### Actor, Command 도출
-![image](https://user-images.githubusercontent.com/24379176/120106617-c50bb280-c198-11eb-833f-55b4fdab24ec.png)
+###  Aggregate 도출(View추가)
+  ![image](https://user-images.githubusercontent.com/84304043/123743718-96444180-d8e8-11eb-8734-3021144f547a.png)
 
-### Aggregate 도출(View추가)
-![image](https://user-images.githubusercontent.com/24379176/120106871-b1ad1700-c199-11eb-907b-4fb552ae4206.png)
-
-    - 청구, 심사, 지급, 청구이력은 그와 연결된 command와 event들에 의하여 트랜잭션이 유지되어야 하는 단위로 그들 끼리 묶어줌
+    - 보험상품등록, 보험가입, 결제, 심사, 보험가입이력은 그와 연결된 command와 event들에 의하여 트랜잭션이 유지되어야 하는 단위로 그들 끼리 묶어줌
 
 ### Bounded Context 도출
-![image](https://user-images.githubusercontent.com/24379176/120106873-b2de4400-c199-11eb-80aa-071d0e0d045a.png)
+  ![image](https://user-images.githubusercontent.com/84304043/123744107-3a2ded00-d8e9-11eb-9a2c-aac2014700e0.png)
 
     - 도메인 서열 분리 
-        - Core Domain: 심사, 지급 : 없어서는 안될 핵심 서비스이며, 연견 Up-time SLA 수준을 99.999% 목표, 배포주기는 심사의 경우 1주일 1회 미만, 지급의 경우 1개월 1회 미만
-        - Supporting Domain: 이력 : 경쟁력을 내기위한 서비스이며, SLA 수준은 연간 60% 이상 uptime 목표, 배포주기는 각 팀의 자율이나 표준 스프린트 주기가 1주일 이므로 1주일 1회 이상을 기준으로 함.
-        - General Domain: 청구 : 고객의 보험금 청구화면으로 3rd Party 외부 서비스를 사용하는 것이 경쟁력이 높음 (핑크색으로 이후 전환할 예정)
+        - Core Domain: 보험가입, 결제, 심사 : 없어서는 안될 핵심 서비스이며, 연견 Up-time SLA 수준을 99.999% 목표, 배포주기는 보험가입/심사의 경우 2주일 1회 미만, 결제의 경우 3개월 1회 미만
+        - Supporting Domain: 가입이력 : 경쟁력을 내기위한 서비스이며, SLA 수준은 연간 60% 이상 uptime 목표, 배포주기는 각 팀의 자율이나 표준 스프린트 주기가 1주일 이므로 1주일 1회 이상을 기준으로 함.
+        - General Domain: 보험상품등록 : 보험상품을 체계적으로 관리하는 InnoProduct와 같은 외부 서비스를 사용하는 것이 경쟁력이 높음 (핑크색으로 이후 전환할 예정)
 
 ### 폴리시의 이동과 컨텍스트 매핑 (점선은 Pub/Sub, 실선은 Req/Resp)
 ![image](https://user-images.githubusercontent.com/24379176/120108615-f1c3c800-c1a0-11eb-9944-428264571b3c.png)
