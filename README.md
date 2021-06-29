@@ -145,12 +145,12 @@
     - 보험상품등록, 보험가입, 결제, 심사, 보험가입이력은 그와 연결된 command와 event들에 의하여 트랜잭션이 유지되어야 하는 단위로 그들 끼리 묶어줌
 
 ### Bounded Context 도출
-  ![image](https://user-images.githubusercontent.com/84304043/123744107-3a2ded00-d8e9-11eb-9a2c-aac2014700e0.png)
+  ![image](https://user-images.githubusercontent.com/84304043/123744638-00a9b180-d8ea-11eb-9513-95b34ff877c3.png)
 
     - 도메인 서열 분리 
         - Core Domain: 보험가입, 결제, 심사 : 없어서는 안될 핵심 서비스이며, 연견 Up-time SLA 수준을 99.999% 목표, 배포주기는 보험가입/심사의 경우 2주일 1회 미만, 결제의 경우 3개월 1회 미만
         - Supporting Domain: 가입이력 : 경쟁력을 내기위한 서비스이며, SLA 수준은 연간 60% 이상 uptime 목표, 배포주기는 각 팀의 자율이나 표준 스프린트 주기가 1주일 이므로 1주일 1회 이상을 기준으로 함.
-        - General Domain: 보험상품등록 : 보험상품을 체계적으로 관리하는 InnoProduct와 같은 외부 서비스를 사용하는 것이 경쟁력이 높음 (핑크색으로 이후 전환할 예정)
+        - General Domain: 보험상품관리 : 보험상품을 체계적으로 관리하는 InnoProduct와 같은 외부 서비스를 사용하는 것이 경쟁력이 높음 (이후 핑크색으로 전환할 예정)
 
 ### 폴리시의 이동과 컨텍스트 매핑 (점선은 Pub/Sub, 실선은 Req/Resp)
 ![image](https://user-images.githubusercontent.com/24379176/120108615-f1c3c800-c1a0-11eb-9944-428264571b3c.png)
