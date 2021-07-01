@@ -125,32 +125,32 @@
 
 
 ### Event 도출
-  ![image](https://user-images.githubusercontent.com/84304043/123743123-bde6da00-d8e7-11eb-9642-c7a9202ba204.png)
+  ![image](https://user-images.githubusercontent.com/84304043/124086256-d55ec800-da8b-11eb-8cd0-4440aea01e7e.png)
 
 ### 부적격 Event 탈락
-  ![image](https://user-images.githubusercontent.com/84304043/123743141-c2ab8e00-d8e7-11eb-8eff-02f8d13f4571.png)
+  ![image](https://user-images.githubusercontent.com/84304043/124086280-dc85d600-da8b-11eb-9d7a-e3df0dd4225a.png)
 
     - 과정중 도출된 잘못된 도메인 이벤트들을 걸러내는 작업을 수행함
-        - 보험 가입 안내문 발송됨: 상품설명서 생성 서비스와 관련된 것으로 향후 서비스 추가 필요
+        - 보험 상품 정보 등록됨, 보험 상품 정보 수정됨: 시나리오에도 없고 상품등록시스템(InnoProduct 등)으로 대체가능함
         - 보험가입내역조회됨: 상태(state) 변경을 발생시키지 않음
-        - 보험 체결 완료됨: 보험가입 심사 승인됨과 동일한 프로세스임
+        - 보험 가입 심사 취소됨: 심사가 시작되면 가입 취소는 청약철회 프로세스로 다른 시스템에서 진행하여야 함
 
 ### Policy, Actor, Command 도출
-  ![image](https://user-images.githubusercontent.com/84304043/123743386-233acb00-d8e8-11eb-874f-094b5984f0a7.png)
+  ![image](https://user-images.githubusercontent.com/84304043/124086778-5d44d200-da8c-11eb-8379-a658aa90a722.png)
 
 ###  Aggregate 도출(View추가)
-  ![image](https://user-images.githubusercontent.com/84304043/123940698-63777780-d9d4-11eb-9297-61c10d078737.png)
+  ![image](https://user-images.githubusercontent.com/84304043/124086909-76e61980-da8c-11eb-94ab-a3f0c1979650.png)
 
-    - 보험상품등록, 보험가입, 결제, 심사는 그와 연결된 command와 event들에 의하여 트랜잭션이 유지되어야 하는 단위로 그들 끼리 묶어줌
+    - 보험가입, 결제, 심사는 그와 연결된 command와 event들에 의하여 트랜잭션이 유지되어야 하는 단위로 그들 끼리 묶어줌
 
 ### Bounded Context 도출
-  ![image](https://user-images.githubusercontent.com/84304043/123940724-6a05ef00-d9d4-11eb-8cba-0ffd3c35f49f.png)
+  ![image](https://user-images.githubusercontent.com/84304043/124086990-8bc2ad00-da8c-11eb-917b-fb2ab3518b2f.png)
 
     - 도메인 서열 분리 
-        - Core Domain: 보험가입, 결제, 심사 : 없어서는 안될 핵심 서비스이며, 연견 Up-time SLA 수준을 99.999% 목표, 배포주기는 보험가입/심사의 경우 2주일 1회 미만, 결제의 경우 3개월 1회 미만
+        - Core Domain: 청약,심사 : 없어서는 안될 핵심 서비스이며, 연견 Up-time SLA 수준을 99.999% 목표, 배포주기는 보험가입의 경우 2주일 1회 미만
         - Supporting Domain: 가입이력 : 경쟁력을 내기위한 서비스이며, SLA 수준은 연간 60% 이상 uptime 목표, 배포주기는 각 팀의 자율이나 표준 스프린트 주기가 1주일 이므로 1주일 1회 이상을 기준으로 함.
-        - General Domain: 보험상품관리 : 보험상품을 체계적으로 관리하는 InnoProduct와 같은 외부 서비스를 사용하는 것이 경쟁력이 높음 (이후 핑크색으로 전환할 예정)
-
+        - General Domain: 결제 : 결제서비스로 3rd Party 외부 서비스를 사용하는 것이 경쟁력이 높음
+        
 ### 폴리시의 이동과 컨텍스트 매핑 (점선은 Pub/Sub, 실선은 Req/Resp)
   ![image](https://user-images.githubusercontent.com/84304043/123940915-9cafe780-d9d4-11eb-939a-abbcaf243885.png)
 
