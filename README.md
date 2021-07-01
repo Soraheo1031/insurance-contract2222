@@ -180,12 +180,12 @@
 
 ### 비기능 요구사항에 대한 검증
 
-![image](https://user-images.githubusercontent.com/24379176/120110652-52ef9980-c1a9-11eb-8e1e-d316560a5fe8.png)
+ ![image](https://user-images.githubusercontent.com/84304043/124091423-caf2fd00-da90-11eb-951e-a04fb17aa0b8.png)
 
     - 마이크로 서비스를 넘나드는 시나리오에 대한 트랜잭션 처리
-        - 보험금청구 취소시 심사취소 처리: 심사취소가 선행되어야 보험금청구 취소가 완료되므로 ACID 트렌젝션 적용. 보험금청구 취소시 심사취소 처리에 대해서는 Request-Response 방식 처리
-        - 지급 완료시 진행상태변경 처리: 지급에서 청구이력 마이크로서비스로 지급 완료 내용이 전달되는 과정에 있어서 청구이력 마이크로서비스가 별도의 배포주기를 가지기 때문에 Eventual Consistency 방식으로 트랜잭션 처리함.
-        - 나머지 모든 inter-microservice 트랜잭션: 데이터 일관성의 시점이 크리티컬하지 않은 모든 경우가 대부분이라 판단, Eventual Consistency 를 기본으로 채택함.
+        - 고객 청약시 결제처리: 결제가 완료되지 않은 청약은 절대 받지 않는다고 결정하여, ACID 트랜잭션 적용. 청약 요청과 결제처리에 대해서는 Request-Response 방식 처리함.
+        - 심사자 배정 완료시 청약완료처리: 심사에서 청약 마이크로서비스로 심사자 배정 완료 요청이 전달되는 과정에 있어서 청약 마이크로 서비스가 별도의 배포주기를 가지기 때문에 Eventual Consistency 방식으로 트랜잭션 처리함.
+        - 나머지 모든 inter-microservice 트랜잭션: 취소처리, 심사승인, 심사거절 등 모든 이벤트에 대해 데이터 일관성의 시점이 크리티컬하지 않은 모든 경우가 대부분이라 판단, Eventual Consistency 를 기본으로 채택함.
 
 
 
